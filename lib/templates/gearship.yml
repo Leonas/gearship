@@ -1,0 +1,25 @@
+---
+# variables here will be compiled to individual files in compiled/attributes.
+attributes:
+  ssh_target: user@target:port
+  docker_username: docker_user
+  docker_password: docker_password
+  app_name: app_name
+  app_repo: username/repository
+  app_port_map: "4000:4000"
+  
+# Remote actions here will be downloaded to compiled/actions.
+actions:
+  # install_newrelic: https://github.com/leonas/gearship-actions/install_newrelic.sh
+
+# Listed files will be copied to compiled/files.
+# files:
+#   - ~/.ssh/id_rsa.pub
+
+preferences:
+  # Erase the generated folder on the server after deploy.
+  erase_remote_folder: true
+  cache_remote_actions: false
+
+  # Use variables like <%= @attributes.environment %> in actions, roles, files and install.sh.
+  eval_erb: true
