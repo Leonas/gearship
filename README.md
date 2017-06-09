@@ -79,3 +79,7 @@ Attributes defined in `gearship.yml` are accessible from any file with `<%= @att
 #### Bash
 Attributes defined in `gearship.yml` are split into individual files in `compiled/attributes`. 
 Refer to them by `$(cat attributes/attribute_name)` in the script.
+
+---------
+
+![](deployment.png)
