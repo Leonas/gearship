@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'gearship'
-  spec.version       = '0.1.4' 
+  spec.version       = '0.2.0' 
   spec.authors       = ['Leonas']
   spec.email         = ['leonas@leonas.io']
   spec.homepage      = 'http://github.com/leonas/gearship'
