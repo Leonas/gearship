@@ -10,7 +10,7 @@ attributes:
   
 # Remote actions here will be downloaded to compiled/actions.
 actions:
-  # install_newrelic: https://github.com/leonas/gearship-actions/install_newrelic.sh
+  # install_newrelic: https://raw.githubusercontent.com/Leonas/gearship-actions/master/install_newrelic.sh
 
 # Listed files will be copied to compiled/files.
 # files:

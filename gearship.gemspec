@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'gearship'
-  spec.version       = '0.1.3' # retrieve this value by: Gem.loaded_specs['gearship'].version.to_s
+  spec.version       = '0.1.4' 
   spec.authors       = ['Leonas']
   spec.email         = ['leonas@leonas.io']
   spec.homepage      = 'http://github.com/leonas/gearship'
