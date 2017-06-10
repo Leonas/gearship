@@ -1,4 +1,3 @@
----
 # variables here will be compiled to individual files in compiled/attributes.
 attributes:
   ssh_target: user@target:port
@@ -6,7 +5,7 @@ attributes:
   docker_password: docker_password
   app_name: app_name
   app_repo: username/repository
-  app_port_map: "4000:4000"
+  app_port_map: "80:4000"
   
 # Remote actions here will be downloaded to compiled/actions.
 actions:
@@ -23,3 +22,5 @@ preferences:
 
   # Use variables like <%= @attributes.environment %> in actions, roles, files and install.sh.
   eval_erb: true
+
+# For security concerns, you may want to keep this file outside of source control, but you should be okay if your project repos are private to you.
