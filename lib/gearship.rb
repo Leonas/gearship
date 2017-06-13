@@ -3,7 +3,7 @@ require 'rainbow'
 require 'yaml'
 
 require 'rainbow/version'
-require 'rainbow/ext/string' unless Rainbow::VERSION < '2.0.0'
+require 'rainbow/ext/string'
 
 module Gearship
   autoload :Cli,        'gearship/cli'

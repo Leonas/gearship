@@ -35,6 +35,7 @@ module Gearship
       end
 
       def do_init(project)
+        copy_file 'templates/.dockerignore',                          ".dockerignore"
         copy_file 'templates/.gitignore',                            "#{project}/.gitignore"
         copy_file 'templates/gearship.yml',                          "#{project}/gearship.yml"
         copy_file 'templates/gearship.sh',                             "#{project}/gearship.sh"
