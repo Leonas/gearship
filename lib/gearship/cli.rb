@@ -8,23 +8,18 @@ module Gearship
 
     desc 'init', 'Initialize gearship project'
     def init(project = 'gearship')
-      do_init(project)
+      init!(project)
     end
 
-    desc 'go [mission] [--sudo]', 'Send gearship on a mission'
+    desc 'go [mission] [--sudo]', 'Send gearship on a mission with ssh.'
     method_options :sudo => false
     def go(target, *args)
-      do_go(target, *args)
+      go!(target, *args)
     end
-
+    
     desc 'compile', 'Compile gearship project for debugging'
     def compile(mission = nil)
-      do_compile(mission)
-    end
-
-    desc 'version', 'Show gearship version'
-    def version
-      puts Gem.loaded_specs['gearship'].version.to_s
+      compile!(mission)
     end
 
     no_tasks do
@@ -34,7 +29,7 @@ module Gearship
         File.expand_path('../../',__FILE__)
       end
 
-      def do_init(project)
+      def init!(project)
         copy_file 'templates/.dockerignore',                          ".dockerignore"
         copy_file 'templates/.gitignore',                            "#{project}/.gitignore"
         copy_file 'templates/gearship.yml',                          "#{project}/gearship.yml"
@@ -54,33 +49,39 @@ module Gearship
         copy_file 'templates/cargo/sample.conf',                     "#{project}/cargo/sample.conf"
       end
 
-      def do_go(*args)
+      def go!(*args)
         mission = args[0]
-        
-        do_compile(mission)
-        
+        compile!(mission)
         sudo = 'sudo ' if options.sudo?
-        user, host, port = parse_target(@config['attributes']['ssh_target'])
-        endpoint = "#{user}@#{host}"
+        
+        if mission.include? 'local'
+          local_commands = <<-EOS
+          bash compiled/gearship.sh
+          EOS
+        else
+          
+          user, host, port = parse_target(@config['attributes']['ssh_target'])
+          endpoint = "#{user}@#{host}"
 
-        # Remove server key from known hosts to avoid mismatch errors when VMs change.
-        `ssh-keygen -R #{host} 2> /dev/null`
+          # Remove server key from known hosts to avoid mismatch errors when VMs change.
+          `ssh-keygen -R #{host} 2> /dev/null`
 
-        remote_commands = <<-EOS
-        rm -rf ~/gearship &&
-        mkdir ~/gearship &&
-        cd ~/gearship &&
-        tar xz &&
-        #{sudo}bash gearship.sh
-        EOS
+          remote_commands = <<-EOS
+          rm -rf ~/gearship &&
+          mkdir ~/gearship &&
+          cd ~/gearship &&
+          tar xz &&
+          #{sudo}bash gearship.sh
+          EOS
 
-        remote_commands.strip! << ' && rm -rf ~/gearship' if @config['preferences'] and @config['preferences']['erase_remote_folder']
+          remote_commands.strip! << ' && rm -rf ~/gearship' if @config['preferences'] and @config['preferences']['erase_remote_folder']
 
-        local_commands = <<-EOS
-        cd compiled
-        tar cz . | ssh -o 'StrictHostKeyChecking no' #{endpoint} -p #{port} '#{remote_commands}'
-        EOS
-
+          local_commands = <<-EOS
+          cd compiled
+          tar cz . | ssh -o 'StrictHostKeyChecking no' #{endpoint} -p #{port} '#{remote_commands}'
+          EOS
+        end
+        
         Open3.popen3(local_commands) do |stdin, stdout, stderr|
           stdin.close
           t = Thread.new do
@@ -94,8 +95,9 @@ module Gearship
           t.join
         end
       end
-
-      def do_compile(mission)
+     
+      
+      def compile!(mission)
         abort_with 'You must be in the gearship folder' unless File.exists?('gearship.yml')
         abort_with "#{mission} doesn't exist!" if mission and !File.exists?("missions/#{mission}.sh")
 
