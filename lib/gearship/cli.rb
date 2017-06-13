@@ -41,13 +41,14 @@ module Gearship
         
         copy_file 'templates/actions/configure_firewall.sh',         "#{project}/actions/configure_firewall.sh"
         copy_file 'templates/actions/install_basics.sh',             "#{project}/actions/install_basics.sh"
-        copy_file 'templates/actions/install_digitalocean_agent.sh', "#{project}/actions/install_digitalocean_agent.sh"
         copy_file 'templates/actions/install_docker.sh',             "#{project}/actions/install_docker.sh"
-        copy_file 'templates/actions/start_app.sh',                  "#{project}/actions/start_app.sh"
+        copy_file 'templates/actions/pull_latest_image.sh',          "#{project}/actions/pull_latest_image.sh"
+        copy_file 'templates/actions/remove_container.sh',                  "#{project}/actions/remove_container.sh"
+        copy_file 'templates/actions/start_container.sh',                  "#{project}/actions/start_container.sh"
         
-        copy_file 'templates/missions/install_app.sh',               "#{project}/missions/install_app.sh"
+        copy_file 'templates/missions/install_container.sh',               "#{project}/missions/install_container.sh"
         copy_file 'templates/missions/setup_host.sh',                "#{project}/missions/setup_host.sh"
-        copy_file 'templates/missions/update_app.sh',                "#{project}/missions/update_app.sh"
+        copy_file 'templates/missions/update_container.sh',                "#{project}/missions/update_container.sh"
         
         copy_file 'templates/cargo/sample.conf',                     "#{project}/cargo/sample.conf"
         copy_file 'templates/notes/sample.md',                       "#{project}/notes/sample.md"
