@@ -51,7 +51,6 @@ module Gearship
         copy_file 'templates/missions/update_container.sh',                "#{project}/missions/update_container.sh"
         
         copy_file 'templates/cargo/sample.conf',                     "#{project}/cargo/sample.conf"
-        copy_file 'templates/notes/sample.md',                       "#{project}/notes/sample.md"
       end
 
       def do_go(*args)
