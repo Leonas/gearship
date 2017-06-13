@@ -17,6 +17,12 @@ module Gearship
       go!(target, *args)
     end
     
+    desc 'local [mission] [--sudo]', 'Send gearship on a local mission.'
+    method_options :sudo => false
+    def local(target, *args)
+      local!(target, *args)
+    end
+    
     desc 'compile', 'Compile gearship project for debugging'
     def compile(mission = nil)
       compile!(mission)
@@ -80,8 +86,25 @@ module Gearship
           cd compiled
           tar cz . | ssh -o 'StrictHostKeyChecking no' #{endpoint} -p #{port} '#{remote_commands}'
           EOS
+          
+          execute(local_commands)
         end
+      end
+      
+      def local!(*args)
+        mission = args[0]
+        compile!(mission)
         
+        sudo = 'sudo ' if options.sudo?
+        
+        local_commands = <<-EOS
+          #{sudo}bash compiled/gearship.sh
+        EOS
+          
+        execute(local_commands)
+      end
+        
+      def execute(local_commands)
         Open3.popen3(local_commands) do |stdin, stdout, stderr|
           stdin.close
           t = Thread.new do
@@ -95,7 +118,6 @@ module Gearship
           t.join
         end
       end
-     
       
       def compile!(mission)
         abort_with 'You must be in the gearship folder' unless File.exists?('gearship.yml')
