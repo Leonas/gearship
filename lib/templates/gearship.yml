@@ -3,9 +3,9 @@ attributes:
   ssh_target: user@target:port
   docker_username: docker_user
   docker_password: docker_password
-  app_name: app_name
-  app_repo: username/repository
-  app_port_map: "80:4000"
+  container_name: container_name
+  container_repo: username/repository
+  container_port_map: "80:4000"
   
 # Remote actions here will be downloaded to compiled/actions.
 actions:

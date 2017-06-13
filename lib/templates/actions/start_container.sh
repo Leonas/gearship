@@ -1,5 +1,5 @@
-docker run --name=<%= @attributes.app_name %> \
-           --publish=<%= @attributes.app_port_map %> \
-           --restart=always \
+docker run --name <%= @attributes.container_name %> \
+           --publish <%= @attributes.container_port_map %> \
+           --restart always \
            --detach \
-           <%= @attributes.app_repo %>
+           <%= @attributes.container_repo %>

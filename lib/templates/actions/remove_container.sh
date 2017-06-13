@@ -1,2 +1,2 @@
-docker stop <%= @attributes.app_name %>
-docker rm <%= @attributes.app_name %>
+docker stop <%= @attributes.container_name %>
+docker rm <%= @attributes.container_name %>
