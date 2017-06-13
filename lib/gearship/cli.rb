@@ -7,20 +7,20 @@ module Gearship
     include Thor::Actions
 
     desc 'init', 'Initialize gearship project'
-    def init(project = 'gearship')
-      init!(project)
+    def init
+      init!('gearship')
     end
 
     desc 'go [mission] [--sudo]', 'Send gearship on a mission with ssh.'
     method_options :sudo => false
-    def go(target, *args)
-      go!(target, *args)
+    def go(mission, *args)
+      go!(mission, *args)
     end
     
     desc 'local [mission] [--sudo]', 'Send gearship on a local mission.'
     method_options :sudo => false
-    def local(target, *args)
-      local!(target, *args)
+    def local(mission, *args)
+      local!(mission, *args)
     end
     
     desc 'compile', 'Compile gearship project for debugging'
@@ -36,23 +36,24 @@ module Gearship
       end
 
       def init!(project)
-        copy_file 'templates/.dockerignore',                          ".dockerignore"
-        copy_file 'templates/.gitignore',                            "#{project}/.gitignore"
-        copy_file 'templates/gearship.yml',                          "#{project}/gearship.yml"
-        copy_file 'templates/gearship.sh',                             "#{project}/gearship.sh"
+        copy_file 'templates/.dockerignore',                 ".dockerignore"
+        copy_file 'templates/.gitignore',                    "gearship/.gitignore"
+        copy_file 'templates/gearship.yml',                  "gearship/gearship.yml"
+        copy_file 'templates/gearship.sh',                   "gearship/gearship.sh"
         
-        copy_file 'templates/actions/configure_firewall.sh',         "#{project}/actions/configure_firewall.sh"
-        copy_file 'templates/actions/install_basics.sh',             "#{project}/actions/install_basics.sh"
-        copy_file 'templates/actions/install_docker.sh',             "#{project}/actions/install_docker.sh"
-        copy_file 'templates/actions/pull_latest_image.sh',          "#{project}/actions/pull_latest_image.sh"
-        copy_file 'templates/actions/remove_container.sh',                  "#{project}/actions/remove_container.sh"
-        copy_file 'templates/actions/start_container.sh',                  "#{project}/actions/start_container.sh"
+        copy_file 'templates/actions/configure_firewall.sh', "gearship/actions/configure_firewall.sh"
+        copy_file 'templates/actions/install_basics.sh',     "gearship/actions/install_basics.sh"
+        copy_file 'templates/actions/install_docker.sh',     "gearship/actions/install_docker.sh"
+        copy_file 'templates/actions/login_docker.sh',       "gearship/actions/login_docker.sh"
+        copy_file 'templates/actions/pull_image.sh',         "gearship/actions/pull_image.sh"
+        copy_file 'templates/actions/remove_container.sh',   "gearship/actions/remove_container.sh"
+        copy_file 'templates/actions/start_container.sh',    "gearship/actions/start_container.sh"
         
-        copy_file 'templates/missions/install_container.sh',               "#{project}/missions/install_container.sh"
-        copy_file 'templates/missions/setup_host.sh',                "#{project}/missions/setup_host.sh"
-        copy_file 'templates/missions/update_container.sh',                "#{project}/missions/update_container.sh"
+        copy_file 'templates/missions/install_container.sh', "gearship/missions/install_container.sh"
+        copy_file 'templates/missions/setup_host.sh',        "gearship/missions/setup_host.sh"
+        copy_file 'templates/missions/update_container.sh',  "gearship/missions/update_container.sh"
         
-        copy_file 'templates/cargo/sample.conf',                     "#{project}/cargo/sample.conf"
+        copy_file 'templates/cargo/sample.conf',             "gearship/cargo/sample.conf"
       end
 
       def go!(*args)
