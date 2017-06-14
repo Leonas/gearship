@@ -5,7 +5,7 @@ attributes:
   docker_password: docker_password
   container_name: container_name
   container_repo: username/repository
-  container_port_map: "80:4000"
+  container_port_map: 80:4000
   
 # Remote actions here will be downloaded to compiled/actions.
 actions:

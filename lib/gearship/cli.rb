@@ -63,10 +63,10 @@ module Gearship
         
         if mission.include? 'local'
           local_commands = <<-EOS
-          bash compiled/gearship.sh
+          cd compiled
+          #{sudo}bash gearship.sh
           EOS
         else
-          
           user, host, port = parse_target(@config['attributes']['ssh_target'])
           endpoint = "#{user}@#{host}"
 
@@ -87,19 +87,19 @@ module Gearship
           cd compiled
           tar cz . | ssh -o 'StrictHostKeyChecking no' #{endpoint} -p #{port} '#{remote_commands}'
           EOS
-          
-          execute(local_commands)
         end
+        
+        execute(local_commands)
       end
       
       def local!(*args)
         mission = args[0]
         compile!(mission)
-        
         sudo = 'sudo ' if options.sudo?
         
         local_commands = <<-EOS
-          #{sudo}bash compiled/gearship.sh
+          cd compiled
+          #{sudo}bash gearship.sh
         EOS
           
         execute(local_commands)
