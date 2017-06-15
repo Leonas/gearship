@@ -4,6 +4,8 @@
 
 Created as a micro alternative to puppet, chef, capistrano, etc, for managing droplets on digital ocean.
 
+#### Caution: Currently under development - breaking changes can occur at any time.
+
 ### Overview
 - `gem install gearship`
 - `gearship init`
